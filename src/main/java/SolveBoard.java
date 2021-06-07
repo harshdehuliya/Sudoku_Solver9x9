@@ -175,6 +175,21 @@ public class SolveBoard extends HttpServlet{
 		
 		int[][] board=(int[][]) session.getAttribute("sudoku");
 		session.removeAttribute("sudoku");
+		for(int i=0;i<9;i++)
+		{
+			for(int j=0;j<9;j++)
+			{
+				if(board[i][j]!=0)
+				{
+					if(!isUnique(board,board[i][j],i,j))
+					{
+						PrintWriter out=res.getWriter();
+						out.println("OOPS...! Solution for given input is Not possible go back and try some other combination");
+						return ;
+					}
+				}	
+			}
+		}
 		if(isValid(board))
 		{
 			if(SolveSudoku(board) || isSolved(board, 0, 0))
